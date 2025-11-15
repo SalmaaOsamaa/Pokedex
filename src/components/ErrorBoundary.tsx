@@ -1,5 +1,5 @@
 import React, { Component, ErrorInfo, ReactNode } from "react";
-import { ErrorFallbackComponent } from "./ErrorFallback";
+import { ErrorFallback } from "./ErrorFallback";
 
 interface Props {
   children: ReactNode;
@@ -34,10 +34,7 @@ export class ErrorBoundary extends Component<Props, State> {
       if (this.props.fallback) {
         return this.props.fallback(this.state.error, this.resetError);
       }
-      return ErrorFallbackComponent.render({
-        error: this.state.error,
-        resetErrorBoundary: this.resetError,
-      });
+      return <ErrorFallback error={this.state.error} resetErrorBoundary={this.resetError} />;
     }
 
     return this.props.children;

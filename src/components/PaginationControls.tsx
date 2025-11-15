@@ -10,40 +10,38 @@ interface PaginationControlsProps {
   onPageChange: (page: number) => void;
 }
 
-export class PaginationControls {
-  static render({ currentPage, totalPages, onPageChange }: PaginationControlsProps) {
-    const pages = calculatePageNumbers(currentPage, totalPages);
+export const PaginationControls = ({ currentPage, totalPages, onPageChange }: PaginationControlsProps) => {
+  const pages = calculatePageNumbers(currentPage, totalPages);
 
-    return (
-      <div className="flex items-center gap-2">
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={() => onPageChange(currentPage - 1)}
-          disabled={currentPage === 1}
-        >
-          <ChevronLeft className="h-4 w-4 mr-1" />
-          Previous
-        </Button>
+  return (
+    <div className="flex items-center gap-2">
+      <Button
+        variant="ghost"
+        size="sm"
+        onClick={() => onPageChange(currentPage - 1)}
+        disabled={currentPage === 1}
+      >
+        <ChevronLeft className="h-4 w-4 mr-1" />
+        Previous
+      </Button>
 
-        {pages.map((page, index) => {
-          if (page === -1) {
-            return PaginationEllipsis.render({ index });
-          }
-          return PaginationButton.render({ page, currentPage, onPageChange });
-        })}
+      {pages.map((page, index) => {
+        if (page === -1) {
+          return <PaginationEllipsis key={`ellipsis-${index}`} index={index} />;
+        }
+        return <PaginationButton key={page} page={page} currentPage={currentPage} onPageChange={onPageChange} />;
+      })}
 
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={() => onPageChange(currentPage + 1)}
-          disabled={currentPage === totalPages}
-        >
-          Next
-          <ChevronRight className="h-4 w-4 ml-1" />
-        </Button>
-      </div>
-    );
-  }
-}
+      <Button
+        variant="ghost"
+        size="sm"
+        onClick={() => onPageChange(currentPage + 1)}
+        disabled={currentPage === totalPages}
+      >
+        Next
+        <ChevronRight className="h-4 w-4 ml-1" />
+      </Button>
+    </div>
+  );
+};
 

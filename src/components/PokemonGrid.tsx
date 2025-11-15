@@ -1,5 +1,5 @@
 import { Pokemon } from "@/domain-models/Pokemon";
-import { PokemonCardComponent } from "./PokemonCard";
+import { PokemonCard } from "./PokemonCard";
 import { PokemonCardSkeleton } from "./PokemonCardSkeleton";
 
 interface PokemonGridProps {
@@ -8,25 +8,23 @@ interface PokemonGridProps {
   itemsPerPage?: number;
 }
 
-export class PokemonGrid {
-  static render({ pokemons, isLoading, itemsPerPage = 10 }: PokemonGridProps) {
-    if (isLoading) {
-      return (
-        <>
-          {Array.from({ length: itemsPerPage }).map((_, index) => (
-            <PokemonCardSkeleton.render key={`skeleton-${index}`} />
-          ))}
-        </>
-      );
-    }
-
+export const PokemonGrid = ({ pokemons, isLoading, itemsPerPage = 10 }: PokemonGridProps) => {
+  if (isLoading) {
     return (
       <>
-        {pokemons.map((pokemon: Pokemon) => (
-          <PokemonCardComponent key={pokemon.name} pokemon={pokemon} />
+        {Array.from({ length: itemsPerPage }).map((_, index) => (
+          <PokemonCardSkeleton key={`skeleton-${index}`} />
         ))}
       </>
     );
   }
-}
+
+  return (
+    <>
+      {pokemons.map((pokemon: Pokemon) => (
+        <PokemonCard key={pokemon.name} pokemon={pokemon} />
+      ))}
+    </>
+  );
+};
 
