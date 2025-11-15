@@ -98,7 +98,7 @@ The Axios instance is configured in `src/network/instance.ts`:
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/SalmaaOsamaa/Pokedex.git
    cd Pokedex-1
    ```
 
