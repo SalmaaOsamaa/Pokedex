@@ -1,5 +1,5 @@
 import { Pokemon } from "@/domain-models/Pokemon";
-import { PokemonCardComponent } from "./PokemonCard";
+import { PokemonCard } from "./PokemonCard";
 import { PokemonCardSkeleton } from "./PokemonCardSkeleton";
 import { InfiniteScrollObserver } from "./InfiniteScrollObserver";
 import { InfiniteScrollLoader } from "./InfiniteScrollLoader";
@@ -15,44 +15,42 @@ interface PokemonListContentProps {
   itemsPerPage: number;
 }
 
-export class PokemonListContent {
-  static render({
-    viewMode,
-    pagePokemons,
-    allPokemons,
-    isLoading,
-    isLoadingInfinite,
-    observerRef,
-    isFetchingNextPage,
-    itemsPerPage,
-  }: PokemonListContentProps) {
-    if (viewMode === "page") {
-      return (
-        <>
-          {isLoading
-            ? Array.from({ length: itemsPerPage }).map((_, index) => (
-                <PokemonCardSkeleton.render key={`skeleton-${index}`} />
-              ))
-            : pagePokemons.map((pokemon: Pokemon) => (
-                <PokemonCardComponent key={pokemon.name} pokemon={pokemon} />
-              ))}
-        </>
-      );
-    }
-
+export const PokemonListContent = ({
+  viewMode,
+  pagePokemons,
+  allPokemons,
+  isLoading,
+  isLoadingInfinite,
+  observerRef,
+  isFetchingNextPage,
+  itemsPerPage,
+}: PokemonListContentProps) => {
+  if (viewMode === "page") {
     return (
       <>
-        {isLoadingInfinite && allPokemons.length === 0
+        {isLoading
           ? Array.from({ length: itemsPerPage }).map((_, index) => (
-              <PokemonCardSkeleton.render key={`skeleton-${index}`} />
+              <PokemonCardSkeleton key={`skeleton-${index}`} />
             ))
-          : allPokemons.map((pokemon: Pokemon) => (
-              <PokemonCardComponent key={pokemon.name} pokemon={pokemon} />
+          : pagePokemons.map((pokemon: Pokemon) => (
+              <PokemonCard key={pokemon.name} pokemon={pokemon} />
             ))}
-        {InfiniteScrollObserver.render({ observerRef })}
-        {InfiniteScrollLoader.render({ isFetching: isFetchingNextPage })}
       </>
     );
   }
-}
+
+  return (
+    <>
+      {isLoadingInfinite && allPokemons.length === 0
+        ? Array.from({ length: itemsPerPage }).map((_, index) => (
+            <PokemonCardSkeleton key={`skeleton-${index}`} />
+          ))
+        : allPokemons.map((pokemon: Pokemon) => (
+            <PokemonCard key={pokemon.name} pokemon={pokemon} />
+          ))}
+      <InfiniteScrollObserver observerRef={observerRef} />
+      <InfiniteScrollLoader isFetching={isFetchingNextPage} />
+    </>
+  );
+};
 

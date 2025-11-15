@@ -3,7 +3,7 @@ import { Card } from "@/components/ui/card";
 import { useQuery } from "@tanstack/react-query";
 import { getPokemon } from "@/network/getSinglePokemon";
 import { getPokemonDetailImageUrl } from "@/lib/pokemon-utils";
-import { BackButtonComponent } from "@/components/BackButton";
+import { BackButton } from "@/components/BackButton";
 import { PokemonHeader } from "@/components/PokemonHeader";
 import { PokemonImage } from "@/components/PokemonImage";
 import { PokemonTypes } from "@/components/PokemonTypes";
@@ -39,31 +39,26 @@ const PokemonDetails = () => {
   return (
     <div className="min-h-screen py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
-        <BackButtonComponent />
+        <BackButton />
 
         <Card className="overflow-hidden">
-          {PokemonHeader.render({
-            name: pokemon?.name || '',
-            id: pokemon?.id || 0,
-          })}
+          <PokemonHeader name={pokemon?.name || ''} id={pokemon?.id || 0} />
 
           <div className="p-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               <div className="flex flex-col items-center">
-                {PokemonImage.render({ imageUrl, name: pokemon?.name || '' })}
-                {PokemonTypes.render({ types: pokemon?.types || [] })}
-                {PokemonPhysicalStats.render({
-                  height: pokemon?.height || 0,
-                  weight: pokemon?.weight || 0,
-                })}
+                <PokemonImage imageUrl={imageUrl} name={pokemon?.name || ''} />
+                <PokemonTypes types={pokemon?.types || []} />
+                <PokemonPhysicalStats
+                  height={pokemon?.height || 0}
+                  weight={pokemon?.weight || 0}
+                />
               </div>
 
               <div>
-                {PokemonStats.render({ stats: pokemon?.stats || [] })}
-                {PokemonAbilities.render({ abilities: pokemon?.abilities || [] })}
-                {PokemonExperience.render({
-                  baseExperience: pokemon?.base_experience || 0,
-                })}
+                <PokemonStats stats={pokemon?.stats || []} />
+                <PokemonAbilities abilities={pokemon?.abilities || []} />
+                <PokemonExperience baseExperience={pokemon?.base_experience || 0} />
               </div>
             </div>
           </div>

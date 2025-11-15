@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { PageHeader } from "@/components/PageHeader";
-import { PaginationComponent } from "@/components/Pagination";
+import { Pagination } from "@/components/Pagination";
 import { PokemonListContent } from "@/components/PokemonListContent";
 import { usePokemonData, CARDS_PER_PAGE } from "@/hooks/usePokemonData";
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
@@ -30,23 +30,23 @@ const MainPage = () => {
   return (
     <div className="min-h-screen py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
-        {PageHeader.render({ viewMode, onViewModeChange: setViewMode })}
+        <PageHeader viewMode={viewMode} onViewModeChange={setViewMode} />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          {PokemonListContent.render({
-            viewMode,
-            pagePokemons,
-            allPokemons,
-            isLoading,
-            isLoadingInfinite,
-            observerRef: observerTarget,
-            isFetchingNextPage,
-            itemsPerPage: CARDS_PER_PAGE,
-          })}
+          <PokemonListContent
+            viewMode={viewMode}
+            pagePokemons={pagePokemons}
+            allPokemons={allPokemons}
+            isLoading={isLoading}
+            isLoadingInfinite={isLoadingInfinite}
+            observerRef={observerTarget}
+            isFetchingNextPage={isFetchingNextPage}
+            itemsPerPage={CARDS_PER_PAGE}
+          />
         </div>
 
         {viewMode === "page" && (
-          <PaginationComponent
+          <Pagination
             currentPage={currentPage}
             totalPages={totalPages}
             onPageChange={setCurrentPage}
