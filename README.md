@@ -1,6 +1,7 @@
 # Pokedex - Pokemon Explorer Application
 
 <div align="center" >
+  <p>Web View</p>
 <img src="./public/ss1.png" alt="welcome" width="500" height="300" >
 <div align="center" >
 <img src="./public/ss2.png" alt="welcome" width="500" height="300" >
